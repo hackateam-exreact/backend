@@ -10,6 +10,10 @@ use Mix.Config
 config :devspot,
   ecto_repos: [Devspot.Repo]
 
+config :devspot, Devspot.Repo,
+  migration_primary_key: [type: :binary_id],
+  migration_foreign_key: [type: :binary_id]
+
 # Configures the endpoint
 config :devspot, DevspotWeb.Endpoint,
   url: [host: "localhost"],

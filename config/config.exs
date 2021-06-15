@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :devspot,
-  ecto_repos: [Devspot.Repo]
+  ecto_repos: [Devspot.Repo],
+  generators: [binary_id: true]
 
 config :devspot, Devspot.Repo,
   migration_primary_key: [type: :binary_id],

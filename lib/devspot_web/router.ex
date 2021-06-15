@@ -7,6 +7,10 @@ defmodule DevspotWeb.Router do
 
   scope "/api", DevspotWeb do
     pipe_through :api
+
+    post "/users", UsersController, :create
+    get "/users/:id", UsersController, :show
+    post "/certificates", CertificatesController, :create
   end
 
   # Enables LiveDashboard only for development

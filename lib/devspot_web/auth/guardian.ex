@@ -22,8 +22,8 @@ defmodule DevspotWeb.Auth.Guardian do
     user_id
   end
 
-  def authenticate(%{"id" => user_id, "password" => password}) do
-    with {:ok, %User{password_hash: hash} = user} <- Devspot.get_user_by_id(user_id),
+  def authenticate(%{"email" => email, "password" => password}) do
+    with {:ok, %User{password_hash: hash} = user} <- Devspot.get_user_by_email(email),
          true <- Pbkdf2.verify_pass(password, hash),
          {:ok, token, _claims} <- encode_and_sign(user) do
       {:ok, token}

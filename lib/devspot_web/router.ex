@@ -21,6 +21,7 @@ defmodule DevspotWeb.Router do
     pipe_through :api
 
     post "/users", UsersController, :create
+    post "/users/sign_in", UsersController, :sign_in
     get "/users/:id", UsersController, :show
   end
 

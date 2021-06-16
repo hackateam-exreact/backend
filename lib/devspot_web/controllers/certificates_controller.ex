@@ -3,6 +3,10 @@ defmodule DevspotWeb.CertificatesController do
 
   alias Devspot.Certificate
 
+  alias DevspotWeb.FallbackController
+
+  action_fallback FallbackController
+
   def create(conn, params) do
     with {:ok, %Certificate{} = certificate} <- Devspot.create_certificate(params) do
       conn

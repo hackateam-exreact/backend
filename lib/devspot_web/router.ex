@@ -14,7 +14,7 @@ defmodule DevspotWeb.Router do
   scope "/api", DevspotWeb do
     pipe_through [:api, :auth]
 
-    post "/certificates/:user_id", CertificatesController, :create
+    post "/certificates", CertificatesController, :create
   end
 
   scope "/api", DevspotWeb do

@@ -1,6 +1,7 @@
 defmodule Devspot.Users.Create do
   alias Devspot.User
-  alias Devspot.Repo
+  alias Devspot.{Error, Repo}
+  alias Ecto.Changeset
 
   @doc """
   Inserts an user into the database.
@@ -12,10 +13,18 @@ defmodule Devspot.Users.Create do
       iex> {:ok, %Devspot.User{}} = Devspot.Users.Create.call(user_params)
 
   """
-  @spec call(map()) :: {:ok, %User{}} | {:error, %Ecto.Changeset{}}
+  @spec call(map()) ::
+          {:ok, %User{}} | {:error, %Error{status: :bad_request, result: %Changeset{}}}
   def call(%{} = params) do
     params
     |> User.changeset()
     |> Repo.insert()
+    |> handle_insert()
+  end
+
+  defp handle_insert({:ok, %User{}} = result), do: result
+
+  defp handle_insert({:error, changeset}) do
+    {:error, Error.build(:bad_request, changeset)}
   end
 end

@@ -1,16 +1,28 @@
 defmodule DevspotWeb.Router do
   use DevspotWeb, :router
 
+  alias DevspotWeb.Auth.Pipeline, as: AuthPipeline
+
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :auth do
+    plug AuthPipeline
+  end
+
+  scope "/api", DevspotWeb do
+    pipe_through [:api, :auth]
+
+    post "/certificates", CertificatesController, :create
   end
 
   scope "/api", DevspotWeb do
     pipe_through :api
 
     post "/users", UsersController, :create
+    post "/users/sign_in", UsersController, :sign_in
     get "/users/:id", UsersController, :show
-    post "/certificates/:user_id", CertificatesController, :create
   end
 
   # Enables LiveDashboard only for development

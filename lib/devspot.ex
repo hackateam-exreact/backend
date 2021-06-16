@@ -41,6 +41,22 @@ defmodule Devspot do
     as: :by_id
 
   @doc """
+  Gets an user from the database with email.
+
+  ## Examples
+
+      iex> user_params = %{email: "maiqui@email.com", password: "123456", first_name: "Maiqui", last_name: "Tomé", contact: "54 9 9191-9292", location: "Flores da Cunha/RS", status: "Open"}
+
+      iex> {:ok, %Devspot.User{} = user} = Devspot.create_user(user_params)
+
+      iex> {:ok, %Devspot.User{}} = Devspot.get_user_by_email(user.email)
+
+  """
+  defdelegate get_user_by_email(email),
+    to: GetUser,
+    as: :by_email
+
+  @doc """
   Inserts a certificate into the database.
 
   ## Examples

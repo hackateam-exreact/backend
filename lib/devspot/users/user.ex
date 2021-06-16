@@ -6,6 +6,8 @@ defmodule Devspot.User do
 
   alias Ecto.Changeset
 
+  alias Devspot.Certificate
+
   @primary_key {:id, :binary_id, autogenerate: true}
 
   @required_params [:email, :first_name, :last_name, :password]
@@ -28,6 +30,8 @@ defmodule Devspot.User do
     field :contact, :string
     field :location, :string
     field :status, Enum, values: @status_types
+
+    has_many :certificates, Certificate
 
     timestamps()
   end

@@ -12,8 +12,6 @@ defmodule DevspotWeb.CertificatesControllerTest do
 
       conn = put_req_header(conn, "authorization", "Bearer #{token}")
 
-      user_id = "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
-
       params = %{
         "url" => "https://balta.io/certificados/1fd6a983-6805-4bb6-8cbd-274e5364d9db",
         "title" => "Começando com Angular com carga horária de 2 horas"

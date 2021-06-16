@@ -25,4 +25,24 @@ defmodule Devspot.Users.GetTest do
       assert response == expected_response
     end
   end
+
+  describe "by_email/1" do
+    test "when there is an user with the given email, returns an user" do
+      email = "maiqui@email.com"
+
+      insert(:user)
+
+      assert {:ok, %User{}} = Get.by_email(email)
+    end
+
+    test "when there is no an user with the given email, returns an error" do
+      email = "aa@email.com"
+
+      expected_response = {:error, %Error{result: "User not found", status: :not_found}}
+
+      response = Get.by_email(email)
+
+      assert response == expected_response
+    end
+  end
 end

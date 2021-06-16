@@ -40,6 +40,15 @@ defmodule Devspot do
     to: GetUser,
     as: :by_id
 
+  @doc """
+  Inserts a certificate into the database.
+
+  ## Examples
+
+    iex> certificate_params = %{"user_id" => "6721ba81-00ce-46cd-b26c-973989b61c55", "url" => "https://balta.io/certificados/1fd6a983-6805-4bb6-8cbd-274e5364d9db", "title" => "Começando com Angular com carga horária de 2 horas"}
+
+    iex> {:ok, %Devspot.Certificate{}} = Devspot.create_certificate(certificate_params)
+  """
   defdelegate create_certificate(params),
     to: CreateCertificate,
     as: :call

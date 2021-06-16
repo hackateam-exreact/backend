@@ -23,6 +23,10 @@ config :devspot, DevspotWeb.Endpoint,
   pubsub_server: Devspot.PubSub,
   live_view: [signing_salt: "CHLRXhCN"]
 
+config :devspot, DevspotWeb.Auth.Guardian,
+  issuer: "devspot",
+  secret_key: "sN3kc9uhi+quB15Zbb1blddtxyTpg8QMWmjogPVC832EwffuzW3UhzpHGciSSb5g"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

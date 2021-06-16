@@ -2,6 +2,9 @@ defmodule DevspotWeb.UsersController do
   use DevspotWeb, :controller
 
   alias Devspot.User
+  alias DevspotWeb.FallbackController
+
+  action_fallback FallbackController
 
   def create(conn, params) do
     with {:ok, %User{} = user} <- Devspot.create_user(params) do

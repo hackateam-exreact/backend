@@ -10,7 +10,7 @@ defmodule DevspotWeb.Router do
 
     post "/users", UsersController, :create
     get "/users/:id", UsersController, :show
-    post "/certificates", CertificatesController, :create
+    post "/certificates/:user_id", CertificatesController, :create
   end
 
   # Enables LiveDashboard only for development

@@ -1,5 +1,5 @@
 defmodule Devspot.Users.Get do
-  alias Devspot.User
+  alias Devspot.{Error, User}
   alias Devspot.Repo
 
   @doc """
@@ -14,9 +14,11 @@ defmodule Devspot.Users.Get do
       iex> {:ok, %Devspot.User{}} = Devspot.Users.Get.by_id(user.id)
 
   """
+  @spec by_id(Ecto.UUID) ::
+          {:ok, %User{}} | {:error, %Error{status: :not_found, result: String.t()}}
   def by_id(id) do
     case Repo.get(User, id) do
-      nil -> {:error, "User not found"}
+      nil -> {:error, Error.build_user_not_found_error()}
       user_schema -> {:ok, user_schema}
     end
   end

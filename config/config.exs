@@ -27,6 +27,10 @@ config :devspot, DevspotWeb.Auth.Guardian,
   issuer: "devspot",
   secret_key: "sN3kc9uhi+quB15Zbb1blddtxyTpg8QMWmjogPVC832EwffuzW3UhzpHGciSSb5g"
 
+config :devspot, DevspotWeb.Auth.Pipeline,
+  module: DevspotWeb.Auth.Guardian,
+  error_handler: DevspotWeb.Auth.ErrorHandler
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

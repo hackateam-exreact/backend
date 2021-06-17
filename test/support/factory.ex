@@ -1,7 +1,7 @@
 defmodule Devspot.Factory do
   use ExMachina.Ecto, repo: Devspot.Repo
 
-  alias Devspot.User
+  alias Devspot.{Skill, User}
 
   def user_params_factory do
     %{
@@ -41,6 +41,14 @@ defmodule Devspot.Factory do
     %{
       "name" => "React",
       "image_url" => "https://www.lucianopastine.tech/img/about-logos/reactjs.png"
+    }
+  end
+
+  def skill_factory do
+    %Skill{
+      id: "b721fcad-e6e8-4e8f-910b-6911f2158b4b",
+      name: "React",
+      image_url: "https://www.lucianopastine.tech/img/about-logos/reactjs.png"
     }
   end
 end

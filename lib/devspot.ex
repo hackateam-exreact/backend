@@ -7,6 +7,8 @@ defmodule Devspot do
   if it comes from the database, an external API or others.
   """
   alias Devspot.Certificates.Create, as: CreateCertificate
+  alias Devspot.Skills.Create, as: CreateSkill
+  alias Devspot.Skills.Get, as: GetSkill
   alias Devspot.Users.Create, as: CreateUser
   alias Devspot.Users.Get, as: GetUser
 
@@ -68,4 +70,12 @@ defmodule Devspot do
   defdelegate create_certificate(params),
     to: CreateCertificate,
     as: :call
+
+  defdelegate create_skill(params),
+    to: CreateSkill,
+    as: :call
+
+  defdelegate get_all_skills(),
+    to: GetSkill,
+    as: :all
 end

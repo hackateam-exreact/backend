@@ -16,6 +16,10 @@ defmodule Devspot.DataCase do
 
   use ExUnit.CaseTemplate
 
+  alias Devspot.Repo
+
+  alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       alias Devspot.Repo
@@ -28,10 +32,10 @@ defmodule Devspot.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Devspot.Repo)
+    :ok = Sandbox.checkout(Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Devspot.Repo, {:shared, self()})
+      Sandbox.mode(Repo, {:shared, self()})
     end
 
     :ok

@@ -36,4 +36,11 @@ defmodule Devspot.Factory do
       "title" => "Começando com Angular com carga horária de 2 horas"
     }
   end
+
+  def skill_params_factory do
+    %{
+      "name" => "React",
+      "image_url" => "https://www.lucianopastine.tech/img/about-logos/reactjs.png"
+    }
+  end
 end

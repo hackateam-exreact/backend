@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :devspot,
-  ecto_repos: [Devspot.Repo]
+  ecto_repos: [Devspot.Repo],
+  generators: [binary_id: true]
 
 config :devspot, Devspot.Repo,
   migration_primary_key: [type: :binary_id],
@@ -21,6 +22,14 @@ config :devspot, DevspotWeb.Endpoint,
   render_errors: [view: DevspotWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Devspot.PubSub,
   live_view: [signing_salt: "CHLRXhCN"]
+
+config :devspot, DevspotWeb.Auth.Guardian,
+  issuer: "devspot",
+  secret_key: "sN3kc9uhi+quB15Zbb1blddtxyTpg8QMWmjogPVC832EwffuzW3UhzpHGciSSb5g"
+
+config :devspot, DevspotWeb.Auth.Pipeline,
+  module: DevspotWeb.Auth.Guardian,
+  error_handler: DevspotWeb.Auth.ErrorHandler
 
 # Configures Elixir's Logger
 config :logger, :console,

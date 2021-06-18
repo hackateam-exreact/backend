@@ -26,4 +26,12 @@ defmodule DevspotWeb.SkillsController do
       |> render("create.json", user_skill: user_skill)
     end
   end
+
+  def show_user_skills(conn, %{"user_id" => user_id}) do
+    with {:ok, skills} <- Devspot.get_user_skills(user_id) do
+      conn
+      |> put_status(:ok)
+      |> render("user_skills.json", user_skills: skills)
+    end
+  end
 end

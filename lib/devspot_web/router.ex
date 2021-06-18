@@ -26,6 +26,7 @@ defmodule DevspotWeb.Router do
     get "/users/:id", UsersController, :show
 
     get "/skills", SkillsController, :index
+    get "/skills/:user_id", SkillsController, :show_user_skills
   end
 
   # Enables LiveDashboard only for development

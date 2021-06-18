@@ -25,6 +25,10 @@ defmodule Devspot.Skills.Create do
     {:ok, Repo.preload(user_skill, [:skill])}
   end
 
+  defp handle_user_skill_insert({:error, error}) do
+    {:error, Error.build(:bad_request, error)}
+  end
+
   defp handle_insert({:ok, %Skill{}} = result), do: result
 
   defp handle_insert({:error, result}) do

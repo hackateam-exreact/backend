@@ -7,6 +7,7 @@ defmodule Devspot do
   if it comes from the database, an external API or others.
   """
   alias Devspot.Certificates.Create, as: CreateCertificate
+  alias Devspot.Certificates.Get, as: GetCertificate
   alias Devspot.Experiences.Create, as: CreateExperience
   alias Devspot.Experiences.Delete, as: DeleteExperience
   alias Devspot.Experiences.Get, as: GetExperience
@@ -71,6 +72,35 @@ defmodule Devspot do
   defdelegate create_certificate(params),
     to: CreateCertificate,
     as: :call
+
+
+  @doc """
+  Gets all certificates by user in the database.
+
+  ## Examples
+
+      iex> user_id = "56f9a803-bdb3-4179-b73e-588d1884ffa2"
+
+      iex> {:ok, schema_list} = Devspot.get_all_certificates(user_id)
+
+  """
+  defdelegate get_all_certificates(user_id),
+    to: GetCertificate,
+    as: :all_by_user_id
+
+  @doc """
+  Gets a certificate by id from the database.
+
+  ## Examples
+
+      iex> certificate_id = "a3bea405-ca99-49fe-8739-71140192ad6f"
+
+      iex> {:ok, %Devspot.Certificate{}} = Devspot.get_certificate_by_id(certificate_id)
+
+  """
+  defdelegate get_certificate_by_id(certificate_id),
+    to: GetCertificate,
+    as: :certificate_by_id
 
   @doc """
   Inserts an experience into the database.

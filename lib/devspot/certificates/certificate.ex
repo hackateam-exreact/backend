@@ -4,7 +4,7 @@ defmodule Devspot.Certificate do
 
   alias Devspot.User
 
-  @derive {Jason.Encoder, only: [:user_id, :url, :title]}
+  @derive {Jason.Encoder, only: [:id, :user_id, :url, :title]}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id

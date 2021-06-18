@@ -17,4 +17,12 @@ defmodule DevspotWeb.CertificatesController do
       |> render("create.json", certificate: certificate)
     end
   end
+
+  def show(conn, %{"user_id" => user_id}) do
+    with {:ok, certificates_list} <- Devspot.get_all_certificates(user_id) do
+      conn
+      |> put_status(:ok)
+      |> render("certificates_list.json", certificates_list: certificates_list)
+    end
+  end
 end

@@ -48,7 +48,7 @@ defmodule Devspot.Skills.CreateTest do
               }} = response
     end
 
-    test "when there are invalid params returns an error" do
+    test "when there are invalid params, returns an error" do
       insert(:user)
       insert(:skill)
 
@@ -64,6 +64,50 @@ defmodule Devspot.Skills.CreateTest do
       assert {:error, %Error{result: changeset, status: :bad_request}} = response
 
       assert errors_on(changeset) == expected_response
+    end
+
+    test "when the user doesn't exists, returns an error" do
+      insert(:user)
+      insert(:skill)
+
+      params = %{
+        "abstract" => "Abstract",
+        "user_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4c",
+        "skill_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4b"
+      }
+
+      response = Create.for_user_skill(params)
+
+      expected_response =
+        {:error,
+         %Devspot.Error{
+           result: {:error, %Devspot.Error{result: "User not found", status: :not_found}},
+           status: :bad_request
+         }}
+
+      assert response == expected_response
+    end
+
+    test "when the skill doesn't exists, returns an error" do
+      insert(:user)
+      insert(:skill)
+
+      params = %{
+        "abstract" => "Abstract",
+        "user_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4a",
+        "skill_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4c"
+      }
+
+      response = Create.for_user_skill(params)
+
+      expected_response =
+        {:error,
+         %Devspot.Error{
+           result: {:error, %Devspot.Error{result: "Skill not found", status: :not_found}},
+           status: :bad_request
+         }}
+
+      assert response == expected_response
     end
   end
 end

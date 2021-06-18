@@ -15,13 +15,16 @@ defmodule Devspot.Skills.Create do
       params
       |> UserSkill.changeset()
       |> Repo.insert()
-      |> handle_insert()
+      |> handle_user_skill_insert()
     else
       error -> {:error, Error.build(:bad_request, error)}
     end
   end
 
-  defp handle_insert({:ok, %UserSkill{}} = result), do: result
+  defp handle_user_skill_insert({:ok, %UserSkill{} = user_skill}) do
+    {:ok, Repo.preload(user_skill, [:skill])}
+  end
+
   defp handle_insert({:ok, %Skill{}} = result), do: result
 
   defp handle_insert({:error, result}) do

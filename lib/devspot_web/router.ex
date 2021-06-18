@@ -15,6 +15,7 @@ defmodule DevspotWeb.Router do
     pipe_through [:api, :auth]
 
     post "/certificates", CertificatesController, :create
+    post "/skills", SkillsController, :create_user_skill
   end
 
   scope "/api", DevspotWeb do

@@ -6,4 +6,11 @@ defmodule DevspotWeb.SkillsView do
       skills: skills
     }
   end
+
+  def render("create.json", %{user_skill: user_skill}) do
+    %{
+      message: "User skills created!",
+      user_skill: user_skill
+    }
+  end
 end

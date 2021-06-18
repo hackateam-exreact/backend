@@ -3,6 +3,7 @@ defmodule DevspotWeb.CertificatesControllerTest do
 
   import Devspot.Factory
 
+  alias Devspot.Certificate
   alias DevspotWeb.Auth.Guardian, as: AuthGuardian
 
   describe "create/2" do
@@ -73,6 +74,35 @@ defmodule DevspotWeb.CertificatesControllerTest do
         |> json_response(:not_found)
 
       expected_response = %{"message" => "User not found"}
+
+      assert response == expected_response
+    end
+  end
+
+  describe "delete/2" do
+    test "when there is a certificate with the given id, deletes the certificate", %{conn: conn} do
+      insert(:user)
+      %Certificate{id: certificate_id} = insert(:certificate)
+
+      response =
+        conn
+        |> delete(Routes.certificates_path(conn, :delete, certificate_id))
+        |> response(:no_content)
+
+      expected_response = ""
+
+      assert response == expected_response
+    end
+
+    test "when there is no a certificate with the given id, returns an error", %{conn: conn} do
+      certificate_id = "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
+
+      response =
+        conn
+        |> delete(Routes.certificates_path(conn, :delete, certificate_id))
+        |> json_response(:not_found)
+
+      expected_response = %{"message" => "Certificate not found"}
 
       assert response == expected_response
     end

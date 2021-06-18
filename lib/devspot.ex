@@ -7,6 +7,7 @@ defmodule Devspot do
   if it comes from the database, an external API or others.
   """
   alias Devspot.Certificates.Create, as: CreateCertificate
+  alias Devspot.Certificates.Delete, as: DeleteCertificate
   alias Devspot.Certificates.Get, as: GetCertificate
   alias Devspot.Experiences.Create, as: CreateExperience
   alias Devspot.Experiences.Delete, as: DeleteExperience
@@ -73,6 +74,33 @@ defmodule Devspot do
     to: CreateCertificate,
     as: :call
 
+  @doc """
+  Deletes a certificate from the database.
+
+  ## Examples
+
+    * creating a certificate
+
+          iex> certificate_params = %{
+            "user_id" => "6721ba81-00ce-46cd-b26c-973989b61c55",
+            "url" => "https://balta.io/certificados/1fd6a983-6805-4bb6-8cbd-274e5364d9db",
+            "title" => "Começando com Angular com carga horária de 2 horas"
+          }
+
+          iex> {:ok, %Devspot.Certificate{id: certificate_id}} = Devspot.create_certificate(certificate_params)
+
+    * deleting a certificate
+
+          iex> {:ok, %Devspot.Certificate{}} = Devspot.delete_certificate(certificate_id)
+
+    * getting the deleted certificate
+
+          iex> {:error, %Devspot.Error{}} = Devspot.Certificates.Get.certificate_by_id(certificate_id)
+
+  """
+  defdelegate delete_certificate(certificate_id),
+    to: DeleteCertificate,
+    as: :call
 
   @doc """
   Gets all certificates by user in the database.

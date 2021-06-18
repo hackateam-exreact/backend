@@ -25,4 +25,12 @@ defmodule DevspotWeb.CertificatesController do
       |> render("certificates_list.json", certificates_list: certificates_list)
     end
   end
+
+  def delete(conn, %{"id" => certificate_id}) do
+    with {:ok, %Certificate{}} <- Devspot.delete_certificate(certificate_id) do
+      conn
+      |> put_status(:no_content)
+      |> text("")
+    end
+  end
 end

@@ -13,16 +13,17 @@ defmodule Devspot.Skills.GetTest do
 
       response = Get.all()
 
-      assert [
-               %Skill{
-                 id: _id,
-                 name: "React",
-                 image_url: "https://www.lucianopastine.tech/img/about-logos/reactjs.png",
-                 inserted_at: _init_date,
-                 updated_at: _up_date
-               }
-               | _rest
-             ] = response
+      assert {:ok,
+              [
+                %Skill{
+                  id: _id,
+                  name: "React",
+                  image_url: "https://www.lucianopastine.tech/img/about-logos/reactjs.png",
+                  inserted_at: _init_date,
+                  updated_at: _up_date
+                }
+                | _rest
+              ]} = response
     end
   end
 end

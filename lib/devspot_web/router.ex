@@ -23,6 +23,8 @@ defmodule DevspotWeb.Router do
     post "/users", UsersController, :create
     post "/users/sign_in", UsersController, :sign_in
     get "/users/:id", UsersController, :show
+
+    get "/skills", SkillsController, :index
   end
 
   # Enables LiveDashboard only for development

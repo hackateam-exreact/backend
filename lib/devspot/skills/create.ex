@@ -1,6 +1,6 @@
 defmodule Devspot.Skills.Create do
   alias Devspot.Skill
-  alias Devspot.{Error, Repo, Skills}
+  alias Devspot.{Error, Repo}
 
   def call(params) do
     params

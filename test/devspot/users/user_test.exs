@@ -3,8 +3,8 @@ defmodule Devspot.UserTest do
 
   import Devspot.Factory
 
-  alias Ecto.Changeset
   alias Devspot.User
+  alias Ecto.Changeset
 
   describe "changeset/2" do
     test "when all params are valid, returns a valid changeset" do

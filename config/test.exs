@@ -12,6 +12,13 @@ config :devspot, Devspot.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
+# Configure database for github actions
+if System.get_env("GITHUB_ACTIONS") do
+  config :devspot, Devspot.Repo,
+    username: "postgres",
+    password: "postgres"
+end
+
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :devspot, DevspotWeb.Endpoint,

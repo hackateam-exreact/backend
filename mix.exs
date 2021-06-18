@@ -46,6 +46,7 @@ defmodule Devspot.MixProject do
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:pbkdf2_elixir, "~> 1.4"},
       {:ex_machina, "~> 2.7.0"},
+      {:cors_plug, "~> 2.0"},
       {:guardian, "~> 2.0"}
     ]
   end

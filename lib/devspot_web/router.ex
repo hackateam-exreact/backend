@@ -21,15 +21,18 @@ defmodule DevspotWeb.Router do
   scope "/api", DevspotWeb do
     pipe_through([:api, :auth])
 
-    post("/certificates", CertificatesController, :create)
+    post "/certificates", CertificatesController, :create
+    post "/experiences", ExperiencesController, :create
   end
 
   scope "/api", DevspotWeb do
     pipe_through(:api)
 
-    post("/users", UsersController, :create)
-    post("/users/sign_in", UsersController, :sign_in)
-    get("/users/:id", UsersController, :show)
+    post "/users", UsersController, :create
+    post "/users/sign_in", UsersController, :sign_in
+    get "/users/:id", UsersController, :show
+    get "/experiences/:user_id", ExperiencesController, :show
+    delete "/experiences/:id", ExperiencesController, :delete
   end
 
   # Enables LiveDashboard only for development

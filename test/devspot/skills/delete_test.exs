@@ -1,5 +1,5 @@
 defmodule Devspot.Skills.DeleteTest do
-  use Devspot.DataCase, async: true
+  use Devspot.DataCase, async: false
 
   import Devspot.Factory
 

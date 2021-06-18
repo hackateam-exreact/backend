@@ -6,7 +6,7 @@ defmodule Devspot.UserSkill do
 
   @required_params [:user_id, :skill_id, :abstract]
 
-  @derive {Jason.Encoder, only: @required_params ++ [:id]}
+  @derive {Jason.Encoder, only: @required_params ++ [:id, :skill]}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id

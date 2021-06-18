@@ -25,4 +25,12 @@ defmodule DevspotWeb.ExperiencesController do
       |> render("experiences_list.json", experiences_list: experiences_list)
     end
   end
+
+  def delete(conn, %{"id" => experience_id}) do
+    with {:ok, %Experience{}} <- Devspot.delete_experience(experience_id) do
+      conn
+      |> put_status(:no_content)
+      |> text("")
+    end
+  end
 end

@@ -25,6 +25,7 @@ defmodule DevspotWeb.Router do
     post "/users/sign_in", UsersController, :sign_in
     get "/users/:id", UsersController, :show
     get "/experiences/:user_id", ExperiencesController, :show
+    delete "/experiences/:id", ExperiencesController, :delete
   end
 
   # Enables LiveDashboard only for development

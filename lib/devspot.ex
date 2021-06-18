@@ -8,6 +8,7 @@ defmodule Devspot do
   """
   alias Devspot.Certificates.Create, as: CreateCertificate
   alias Devspot.Experiences.Create, as: CreateExperience
+  alias Devspot.Experiences.Delete, as: DeleteExperience
   alias Devspot.Experiences.Get, as: GetExperience
   alias Devspot.Users.Create, as: CreateUser
   alias Devspot.Users.Get, as: GetUser
@@ -91,7 +92,6 @@ defmodule Devspot do
     to: CreateExperience,
     as: :call
 
-
   @doc """
   Gets all experiences by user in the database.
 
@@ -119,4 +119,34 @@ defmodule Devspot do
   defdelegate get_experience_by_id(experience_id),
     to: GetExperience,
     as: :experience_by_id
+
+  @doc """
+  Deletes an experience from the database.
+
+  ## Examples
+
+    * creating an experience
+
+          iex> experience_params = %{
+            "user_id" => "6721ba81-00ce-46cd-b26c-973989b61c55",
+            "company" => "Rocketseat",
+            "end" => "30/12/2012",
+            "role" => "Educator",
+            "start" => "30/11/2011"
+          }
+
+          iex> {:ok, %Devspot.Experience{id: experience_id}} = Devspot.create_experience(experience_params)
+
+    * deleting an experience
+
+          iex> {:ok, %Devspot.Experience{}} = Devspot.delete_experience(experience_id)
+
+    * getting the deleted experience
+
+          iex> {:error, %Devspot.Error{}} = Devspot.Experiences.Get.experience_by_id(experience_id)
+
+  """
+  defdelegate delete_experience(experience_id),
+    to: DeleteExperience,
+    as: :call
 end

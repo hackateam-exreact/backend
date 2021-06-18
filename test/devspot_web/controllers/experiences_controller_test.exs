@@ -3,6 +3,7 @@ defmodule DevspotWeb.ExperiencesControllerTest do
 
   import Devspot.Factory
 
+  alias Devspot.Experience
   alias DevspotWeb.Auth.Guardian, as: AuthGuardian
 
   describe "create/2" do
@@ -73,6 +74,35 @@ defmodule DevspotWeb.ExperiencesControllerTest do
         |> json_response(:not_found)
 
       expected_response = %{"message" => "User not found"}
+
+      assert response == expected_response
+    end
+  end
+
+  describe "delete/2" do
+    test "when there is an experience with the given id, deletes the experience", %{conn: conn} do
+      insert(:user)
+      %Experience{id: experience_id} = insert(:experience)
+
+      response =
+        conn
+        |> delete(Routes.experiences_path(conn, :delete, experience_id))
+        |> response(:no_content)
+
+      expected_response = ""
+
+      assert response == expected_response
+    end
+
+    test "when there is no an experience with the given id, returns an error", %{conn: conn} do
+      experience_id = "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
+
+      response =
+        conn
+        |> delete(Routes.experiences_path(conn, :delete, experience_id))
+        |> json_response(:not_found)
+
+      expected_response = %{"message" => "Experience not found"}
 
       assert response == expected_response
     end

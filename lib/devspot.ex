@@ -105,4 +105,18 @@ defmodule Devspot do
   defdelegate get_all_experiences(user_id),
     to: GetExperience,
     as: :all_by_user_id
+
+  @doc """
+  Gets an experience by id from the database.
+
+  ## Examples
+
+      iex> experience_id = "b1533a10-e0c3-42e3-89cd-304fac1e63cf"
+
+      iex> %Devspot.Experience{} = Devspot.get_experience_by_id(experience_id)
+
+  """
+  defdelegate get_experience_by_id(experience_id),
+    to: GetExperience,
+    as: :experience_by_id
 end

@@ -103,4 +103,26 @@ defmodule Devspot.Experiences.GetTest do
       assert response == expected_response
     end
   end
+
+  describe "experience_by_id/1" do
+    test "When there is an experience with the given id, returns the experience" do
+      insert(:user)
+      %Experience{id: experience_id} = insert(:experience)
+
+      response = Get.experience_by_id(experience_id)
+
+      assert {:ok, %Experience{}} = response
+    end
+
+    test "When there is no an experience with the given id, returns an error" do
+      experience_id = "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
+
+      response = Get.experience_by_id(experience_id)
+
+      expected_response =
+        {:error, %Devspot.Error{result: "Experience not found", status: :not_found}}
+
+      assert response == expected_response
+    end
+  end
 end

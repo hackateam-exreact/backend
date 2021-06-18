@@ -82,4 +82,8 @@ defmodule Devspot do
   defdelegate get_skill_by_id(id),
     to: GetSkill,
     as: :by_id
+
+  defdelegate create_user_skill(params),
+    to: CreateSkill,
+    as: :for_user_skill
 end

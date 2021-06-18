@@ -51,4 +51,12 @@ defmodule Devspot.Factory do
       image_url: "https://www.lucianopastine.tech/img/about-logos/reactjs.png"
     }
   end
+
+  def user_skill_params_factory do
+    %{
+      "user_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4a",
+      "skill_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4b",
+      "abstract" => "I studied 6 months and built an app to support medical health care"
+    }
+  end
 end

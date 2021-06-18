@@ -15,12 +15,12 @@ defmodule DevspotWeb.SkillsControllerTest do
       assert %{
                "skills" => [
                  %{
+                   "id" => _id,
                    "image_url" => "https://www.lucianopastine.tech/img/about-logos/reactjs.png",
                    "name" => "React"
                  }
                ]
-             } =
-               response
+             } = response
     end
   end
 end

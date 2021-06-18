@@ -1,21 +1,21 @@
-defmodule Devspot.Skill do
+defmodule Devspot.UserSkill do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Devspot.UserSkill
+  alias Devspot.{Skill, User}
 
-  @required_params [:name, :image_url]
+  @required_params [:user_id, :skill_id, :abstract]
 
-  @derive {Jason.Encoder, only: [:id, :name, :image_url]}
+  @derive {Jason.Encoder, only: @required_params ++ [:id]}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
 
-  schema "skills" do
-    field(:name, :string)
-    field(:image_url, :string)
+  schema "user_skills" do
+    field :abstract, :string
 
-    has_many :user_skills, UserSkill
+    belongs_to :skill, Skill
+    belongs_to :user, User
 
     timestamps()
   end

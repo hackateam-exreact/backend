@@ -78,4 +78,8 @@ defmodule Devspot do
   defdelegate get_all_skills(),
     to: GetSkill,
     as: :all
+
+  defdelegate get_skill_by_id(id),
+    to: GetSkill,
+    as: :by_id
 end

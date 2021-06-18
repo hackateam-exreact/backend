@@ -1,6 +1,6 @@
 defmodule Devspot.Skills.Create do
   alias Devspot.Skill
-  alias Devspot.{Error, Repo}
+  alias Devspot.{Error, Repo, User, UserSkill}
 
   def call(params) do
     params
@@ -9,6 +9,19 @@ defmodule Devspot.Skills.Create do
     |> handle_insert()
   end
 
+  def for_user_skill(%{"user_id" => user_id, "skill_id" => skill_id} = params) do
+    with {:ok, %User{}} <- Devspot.get_user_by_id(user_id),
+         {:ok, %Skill{}} <- Devspot.get_skill_by_id(skill_id) do
+      params
+      |> UserSkill.changeset()
+      |> Repo.insert()
+      |> handle_insert()
+    else
+      error -> {:error, Error.build(:bad_request, error)}
+    end
+  end
+
+  defp handle_insert({:ok, %UserSkill{}} = result), do: result
   defp handle_insert({:ok, %Skill{}} = result), do: result
 
   defp handle_insert({:error, result}) do

@@ -27,4 +27,43 @@ defmodule Devspot.Skills.CreateTest do
       assert errors_on(changeset) == expected_response
     end
   end
+
+  describe "for_user_skill/1" do
+    test "when all params are valid, returns a user skill" do
+      insert(:user)
+      insert(:skill)
+
+      params = build(:user_skill_params)
+
+      response = Create.for_user_skill(params)
+
+      assert {:ok,
+              %Devspot.UserSkill{
+                abstract: "I studied 6 months and built an app to support medical health care",
+                id: _id,
+                inserted_at: _insert_date,
+                skill_id: _skill_id,
+                updated_at: _up_date,
+                user_id: _user_id
+              }} = response
+    end
+
+    test "when there are invalid params returns an error" do
+      insert(:user)
+      insert(:skill)
+
+      params = %{
+        "user_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4a",
+        "skill_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4b"
+      }
+
+      response = Create.for_user_skill(params)
+
+      expected_response = %{abstract: ["can't be blank"]}
+
+      assert {:error, %Error{result: changeset, status: :bad_request}} = response
+
+      assert errors_on(changeset) == expected_response
+    end
+  end
 end

@@ -4,22 +4,29 @@ defmodule DevspotWeb.Router do
   alias DevspotWeb.Auth.Pipeline, as: AuthPipeline
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(CORSPlug,
+      origin: [
+        "https://frontend-git-develop-fullstack-alchemists.vercel.app/",
+        "http://localhost:3000"
+      ]
+    )
+
+    plug(:accepts, ["json"])
   end
 
   pipeline :auth do
-    plug AuthPipeline
+    plug(AuthPipeline)
   end
 
   scope "/api", DevspotWeb do
-    pipe_through [:api, :auth]
+    pipe_through([:api, :auth])
 
     post "/certificates", CertificatesController, :create
     post "/experiences", ExperiencesController, :create
   end
 
   scope "/api", DevspotWeb do
-    pipe_through :api
+    pipe_through(:api)
 
     post "/users", UsersController, :create
     post "/users/sign_in", UsersController, :sign_in
@@ -38,8 +45,8 @@ defmodule DevspotWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through [:fetch_session, :protect_from_forgery]
-      live_dashboard "/dashboard", metrics: DevspotWeb.Telemetry
+      pipe_through([:fetch_session, :protect_from_forgery])
+      live_dashboard("/dashboard", metrics: DevspotWeb.Telemetry)
     end
   end
 end

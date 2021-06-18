@@ -3,8 +3,8 @@ defmodule Devspot.CertificateTest do
 
   import Devspot.Factory
 
-  alias Ecto.Changeset
   alias Devspot.Certificate
+  alias Ecto.Changeset
 
   describe "changeset/1" do
     test "when all params are valid, returns a valid changeset" do

@@ -20,6 +20,7 @@ defmodule Devspot do
   alias Devspot.Skills.Get, as: GetSkill
   alias Devspot.Users.Create, as: CreateUser
   alias Devspot.Users.Get, as: GetUser
+  alias Devspot.Users.Update, as: UpdateUser
 
   @doc """
   Inserts an user into the database.
@@ -66,6 +67,24 @@ defmodule Devspot do
   defdelegate get_user_by_email(email),
     to: GetUser,
     as: :by_email
+
+  @doc """
+  Updates an User with the given params
+
+  ## Examples
+
+      iex> user_params = %{email: "maiqui@email.com", password: "123456", first_name: "Maiqui", last_name: "Tomé", contact: "54 9 9191-9292", location: "Flores da Cunha/RS", status: "Open"}
+
+      iex> {:ok, %Devspot.User{} = user} = Devspot.create_user(user_params)
+
+      iex> update_params = %{location: "Salvador BA"}
+
+      iex> {:ok, %Devspot.User{}} = Devspot.update_user(update_params)
+
+  """
+  defdelegate update_user(params),
+    to: UpdateUser,
+    as: :call
 
   @doc """
   Inserts a certificate into the database.

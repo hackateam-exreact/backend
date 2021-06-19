@@ -25,6 +25,7 @@ defmodule DevspotWeb.Router do
     post "/skills", SkillsController, :create_user_skill
     delete "/skills/:user_skill_id", SkillsController, :delete_user_skill
     post "/experiences", ExperiencesController, :create
+    put "/users", UsersController, :update
     post "/articles", ArticlesController, :create
   end
 

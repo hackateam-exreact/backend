@@ -25,7 +25,9 @@ defmodule Devspot.Factory do
       contact: "54 9 9191-9292",
       location: "Flores da Cunha/RS",
       status: "Open",
-      id: "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
+      id: "b721fcad-e6e8-4e8f-910b-6911f2158b4a",
+      description: "bacana",
+      image_url: "https://avatars.githubusercontent.com/u/48564739?v=4"
     }
   end
 

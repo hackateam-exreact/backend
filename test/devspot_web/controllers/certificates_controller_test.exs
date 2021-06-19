@@ -1,5 +1,5 @@
 defmodule DevspotWeb.CertificatesControllerTest do
-  use DevspotWeb.ConnCase, async: true
+  use DevspotWeb.ConnCase, async: false
 
   import Devspot.Factory
 
@@ -40,7 +40,7 @@ defmodule DevspotWeb.CertificatesControllerTest do
 
       insert(:user)
       insert(:certificate)
-      insert(:certificate, title: "Segundo Curso")
+      insert(:certificate, title: "Segundo Curso", id: "b721fcad-e6e8-4e8f-910b-6911f2158b4a")
 
       response =
         conn
@@ -80,22 +80,32 @@ defmodule DevspotWeb.CertificatesControllerTest do
   end
 
   describe "delete/2" do
-    test "when there is a certificate with the given id, deletes the certificate", %{conn: conn} do
-      insert(:user)
-      %Certificate{id: certificate_id} = insert(:certificate)
+    setup %{conn: conn} do
+      user = insert(:user)
 
+      %Certificate{id: certificate_id} = insert(:certificate)
+      {:ok, token, _claims} = AuthGuardian.encode_and_sign(user)
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
+
+      {:ok, conn: conn, certificate_id: certificate_id}
+    end
+
+    test "when the certificate exists, deletes the certificate", %{
+      conn: conn,
+      certificate_id: certificate_id
+    } do
       response =
         conn
         |> delete(Routes.certificates_path(conn, :delete, certificate_id))
         |> response(:no_content)
 
-      expected_response = ""
-
-      assert response == expected_response
+      assert response == ""
     end
 
-    test "when there is no a certificate with the given id, returns an error", %{conn: conn} do
-      certificate_id = "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
+    test "when there's no certificate with the given id, returns an error", %{
+      conn: conn
+    } do
+      certificate_id = "b721fcad-e6e8-4e8f-910b-6911f2158b4c"
 
       response =
         conn

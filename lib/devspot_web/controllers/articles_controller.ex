@@ -27,7 +27,9 @@ defmodule DevspotWeb.ArticlesController do
   end
 
   def delete(conn, %{"id" => article_id}) do
-    with {:ok, %Article{}} <- Devspot.delete_article(article_id) do
+    user_id = Guardian.retrieve_user_id_from_connection(conn)
+
+    with {:ok, %Article{}} <- Devspot.delete_article(article_id, user_id) do
       conn
       |> put_status(:no_content)
       |> text("")

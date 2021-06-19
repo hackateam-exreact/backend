@@ -21,12 +21,13 @@ defmodule Devspot.Articles.Delete do
         iex> {:error, %Devspot.Error{}} = Devspot.Articles.Get.article_by_id(article_id)
 
   """
-  @spec call(Ecto.UUID) ::
+  @spec call(Ecto.UUID, Ecto.UUID) ::
           {:ok, %Article{}}
           | {:error, %Error{result: String.t(), status: :not_found}}
-  def call(article_id) do
-    with {:ok, %Article{} = article} <- Devspot.get_article_by_id(article_id) do
-      Repo.delete(article)
+  def call(article_id, user_id) do
+    case Repo.get_by(Article, id: article_id, user_id: user_id) do
+      nil -> {:error, Error.build_article_not_found_error()}
+      article -> Repo.delete(article)
     end
   end
 end

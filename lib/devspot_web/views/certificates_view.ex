@@ -9,4 +9,10 @@ defmodule DevspotWeb.CertificatesView do
       certificate: certificate
     }
   end
+
+  def render("certificates_list.json", %{certificates_list: certificates_list}) do
+    %{
+      list_of_certificates: certificates_list
+    }
+  end
 end

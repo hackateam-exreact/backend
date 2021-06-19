@@ -13,4 +13,6 @@ defmodule Devspot.Error do
   end
 
   def build_user_not_found_error, do: build(:not_found, "User not found")
+  def build_experience_not_found_error, do: build(:not_found, "Experience not found")
+  def build_certificate_not_found_error, do: build(:not_found, "Certificate not found")
 end

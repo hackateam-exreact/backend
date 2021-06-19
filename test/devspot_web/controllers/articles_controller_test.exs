@@ -52,17 +52,15 @@ defmodule DevspotWeb.ArticlesControllerTest do
                "list_of_articles" => [
                  %{
                    "id" => _id1,
-                   "title" => "O Ciclo de Vida do Request no Phoenix",
-                   "url" =>
-                     "https://dev.to/maiquitome/o-ciclo-de-vida-do-request-no-phoenix-53e7",
-                   "user_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
+                   "title" => _title1,
+                   "url" => _url1,
+                   "user_id" => _user_id1
                  },
                  %{
                    "id" => _id2,
-                   "title" => "Segundo Curso",
-                   "url" =>
-                     "https://dev.to/maiquitome/o-ciclo-de-vida-do-request-no-phoenix-53e7",
-                   "user_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
+                   "title" => _title2,
+                   "url" => _url2,
+                   "user_id" => _user_id2
                  }
                ]
              } = response

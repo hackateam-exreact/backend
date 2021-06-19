@@ -33,6 +33,8 @@ defmodule DevspotWeb.Router do
     get "/users/:id", UsersController, :show
     get "/experiences/:user_id", ExperiencesController, :show
     delete "/experiences/:id", ExperiencesController, :delete
+    get "/certificates/:user_id", CertificatesController, :show
+    delete "/certificates/:id", CertificatesController, :delete
   end
 
   # Enables LiveDashboard only for development

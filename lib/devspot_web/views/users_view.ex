@@ -10,6 +10,13 @@ defmodule DevspotWeb.UsersView do
     }
   end
 
+  def render("update.json", %{user: %User{} = user}) do
+    %{
+      message: "User updated!",
+      user: user
+    }
+  end
+
   def render("user.json", %{user: %User{} = user}), do: %{user: user}
 
   def render("sign_in.json", %{token: token}) do

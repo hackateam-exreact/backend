@@ -23,6 +23,7 @@ defmodule DevspotWeb.Router do
 
     post "/certificates", CertificatesController, :create
     post "/experiences", ExperiencesController, :create
+    put "/users", UsersController, :update
   end
 
   scope "/api", DevspotWeb do

@@ -31,4 +31,15 @@ defmodule DevspotWeb.UsersController do
       |> render("user.json", user: user)
     end
   end
+
+  def update(conn, params) do
+    user_id = Guardian.retrieve_user_id_from_connection(conn)
+    params = Map.put(params, "id", user_id)
+
+    with {:ok, %User{} = user} <- Devspot.update_user(params) do
+      conn
+      |> put_status(:ok)
+      |> render("update.json", user: user)
+    end
+  end
 end

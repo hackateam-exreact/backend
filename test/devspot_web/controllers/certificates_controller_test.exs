@@ -50,16 +50,16 @@ defmodule DevspotWeb.CertificatesControllerTest do
       assert %{
                "list_of_certificates" => [
                  %{
-                   "id" => _id,
-                   "title" => "Começando com Angular com carga horária de 2 horas",
-                   "url" => "https://balta.io/certificados/1fd6a983-6805-4bb6-8cbd-274e5364d9db",
-                   "user_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
+                   "id" => _id1,
+                   "title" => _title1,
+                   "url" => _url1,
+                   "user_id" => _user_id1
                  },
                  %{
                    "id" => _id2,
-                   "title" => "Segundo Curso",
-                   "url" => "https://balta.io/certificados/1fd6a983-6805-4bb6-8cbd-274e5364d9db",
-                   "user_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
+                   "title" => _title2,
+                   "url" => _url2,
+                   "user_id" => _user_id2
                  }
                ]
              } = response

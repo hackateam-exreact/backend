@@ -1,5 +1,5 @@
 defmodule Devspot.Certificates.Delete do
-  alias Devspot.{Error, Certificate, Repo}
+  alias Devspot.{Certificate, Error, Repo}
 
   @doc """
   Deletes an certificate from the database.

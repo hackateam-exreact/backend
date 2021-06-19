@@ -10,9 +10,8 @@ defmodule Devspot.Users.Update do
   end
 
   defp do_update(user, params) do
-    with %Changeset{valid?: true} = changeset <- User.changeset(user, params) do
-      Repo.update(changeset)
-    else
+    case User.changeset(user, params) do
+      %Changeset{valid?: true} = changeset -> Repo.update(changeset)
       error -> {:error, Error.build(:bad_request, error)}
     end
   end

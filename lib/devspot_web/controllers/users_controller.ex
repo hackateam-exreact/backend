@@ -8,19 +8,22 @@ defmodule DevspotWeb.UsersController do
 
   action_fallback FallbackController
 
-  def sign_in(conn, params) do
-    with {:ok, token} <- Guardian.authenticate(params) do
+  def sign_in(conn, %{"email" => email} = params) do
+    with {:ok, token} <- Guardian.authenticate(params),
+         {:ok, %User{} = user} <- Devspot.get_user_by_email(email) do
       conn
       |> put_status(:ok)
-      |> render("sign_in.json", token: token)
+      |> render("sign_in.json", token: token, user: user)
     end
   end
 
   def create(conn, params) do
     with {:ok, %User{} = user} <- Devspot.create_user(params) do
+      {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
       conn
       |> put_status(:created)
-      |> render("create.json", user: user)
+      |> render("create.json", user: user, token: token)
     end
   end
 

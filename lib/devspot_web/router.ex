@@ -24,6 +24,7 @@ defmodule DevspotWeb.Router do
     post "/certificates", CertificatesController, :create
     post "/experiences", ExperiencesController, :create
     put "/users", UsersController, :update
+    post "/articles", ArticlesController, :create
   end
 
   scope "/api", DevspotWeb do
@@ -36,6 +37,8 @@ defmodule DevspotWeb.Router do
     delete "/experiences/:id", ExperiencesController, :delete
     get "/certificates/:user_id", CertificatesController, :show
     delete "/certificates/:id", CertificatesController, :delete
+    get "/articles/:user_id", ArticlesController, :show
+    delete "/articles/:id", ArticlesController, :delete
   end
 
   # Enables LiveDashboard only for development

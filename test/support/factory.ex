@@ -1,7 +1,7 @@
 defmodule Devspot.Factory do
   use ExMachina.Ecto, repo: Devspot.Repo
 
-  alias Devspot.{Certificate, Experience, User}
+  alias Devspot.{Article, Certificate, Experience, User}
 
   def user_params_factory do
     %{
@@ -64,6 +64,22 @@ defmodule Devspot.Factory do
       role: "Elixir Backend Developer",
       start: ~D[2011-11-30],
       end: ~D[2012-12-30]
+    }
+  end
+
+  def article_params_factory do
+    %{
+      "user_id" => "b721fcad-e6e8-4e8f-910b-6911f2158b4a",
+      "url" => "https://dev.to/maiquitome/o-ciclo-de-vida-do-request-no-phoenix-53e7",
+      "title" => "O Ciclo de Vida do Request no Phoenix"
+    }
+  end
+
+  def article_factory do
+    %Article{
+      user_id: "b721fcad-e6e8-4e8f-910b-6911f2158b4a",
+      url: "https://dev.to/maiquitome/o-ciclo-de-vida-do-request-no-phoenix-53e7",
+      title: "O Ciclo de Vida do Request no Phoenix"
     }
   end
 end

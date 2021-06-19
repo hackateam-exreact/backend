@@ -6,6 +6,9 @@ defmodule Devspot do
   Contexts are also responsible for managing your data, regardless
   if it comes from the database, an external API or others.
   """
+  alias Devspot.Articles.Create, as: CreateArticle
+  alias Devspot.Articles.Delete, as: DeleteArticle
+  alias Devspot.Articles.Get, as: GetArticle
   alias Devspot.Certificates.Create, as: CreateCertificate
   alias Devspot.Certificates.Delete, as: DeleteCertificate
   alias Devspot.Certificates.Get, as: GetCertificate
@@ -225,5 +228,71 @@ defmodule Devspot do
   """
   defdelegate delete_experience(experience_id),
     to: DeleteExperience,
+    as: :call
+
+  @doc """
+  Inserts an article into the database.
+
+  ## Examples
+
+    iex> article_params = %{"user_id" => "6721ba81-00ce-46cd-b26c-973989b61c55", "url" => "https://dev.to/maiquitome/o-ciclo-de-vida-do-request-no-phoenix-53e7", "title" => "O Ciclo de Vida do Request no Phoenix"}
+
+    iex> {:ok, %Devspot.Article{}} = Devspot.create_article(article_params)
+
+  """
+  defdelegate create_article(params),
+    to: CreateArticle,
+    as: :call
+
+  @doc """
+  Gets all articles by user in the database.
+
+  ## Examples
+
+      iex> user_id = "6721ba81-00ce-46cd-b26c-973989b61c55"
+
+      iex> {:ok, schema_list} = Devspot.get_all_articles(user_id)
+
+  """
+  defdelegate get_all_articles(user_id),
+    to: GetArticle,
+    as: :all_by_user_id
+
+  @doc """
+  Gets an article by id from the database.
+
+  ## Examples
+
+      iex> article_id = "d8d256d3-9f97-46ce-ad4c-08e1c01f09ad"
+
+      iex> {:ok, %Devspot.Article{}} = Devspot.get_article_by_id(article_id)
+
+  """
+  defdelegate get_article_by_id(article_id),
+    to: GetArticle,
+    as: :article_by_id
+
+  @doc """
+  Deletes an article from the database.
+
+  ## Examples
+
+    * creating an article
+
+        iex> article_params = %{"user_id" => "6721ba81-00ce-46cd-b26c-973989b61c55", "url" => "https://dev.to/maiquitome/o-ciclo-de-vida-do-request-no-phoenix-53e7", "title" => "O Ciclo de Vida do Request no Phoenix"}
+
+        iex> {:ok, %Devspot.Article{id: article_id}} = Devspot.create_article(article_params)
+
+    * deleting an article
+
+        iex> {:ok, %Devspot.Article{}} = Devspot.delete_article(article_id)
+
+    * getting the deleted article
+
+        iex> {:error, %Devspot.Error{}} = Devspot.Articles.Get.article_by_id(article_id)
+
+  """
+  defdelegate delete_article(article_id),
+    to: DeleteArticle,
     as: :call
 end

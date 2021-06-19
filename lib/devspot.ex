@@ -8,6 +8,7 @@ defmodule Devspot do
   """
   alias Devspot.Certificates.Create, as: CreateCertificate
   alias Devspot.Skills.Create, as: CreateSkill
+  alias Devspot.Skills.Delete, as: DeleteSkill
   alias Devspot.Skills.Get, as: GetSkill
   alias Devspot.Users.Create, as: CreateUser
   alias Devspot.Users.Get, as: GetUser
@@ -71,23 +72,79 @@ defmodule Devspot do
     to: CreateCertificate,
     as: :call
 
+  @doc """
+  Inserts a skill into the database.
+
+  ## Examples
+
+    iex> skill_params = %{"name" => "React", "image_url" => "example.com"}
+
+    iex> {:ok, %Devspot.Skill{}} = Devspot.create_skill(skill_params)
+  """
   defdelegate create_skill(params),
     to: CreateSkill,
     as: :call
 
+  @doc """
+  Retrieve all skills from the database.
+
+  ## Examples
+
+    iex> {:ok, [%Devspot.Skill{}, %Devspot.Skill{}]} = Devspot.get_all_skills()
+  """
   defdelegate get_all_skills(),
     to: GetSkill,
     as: :all
 
+  @doc """
+  Get a skill from the database by id.
+
+  ## Examples
+
+    iex> {:ok, %Devspot.Skill{}} = Devspot.get_skill_by_id(id)
+  """
   defdelegate get_skill_by_id(id),
     to: GetSkill,
     as: :by_id
 
+  @doc """
+  Inserts an user skill into the database.
+
+  ## Examples
+
+    iex> user_skill_params = %{"user_id" => user_id, "skill_id" => skill_id, "abstract" => "I studied it for 6 months"}
+
+    iex> {:ok, %Devspot.UserSkill{}} = Devspot.create_user_skill(user_skill_params)
+  """
+  defdelegate create_user_skill(params),
+    to: CreateSkill,
+    as: :for_user_skill
+
+  @doc """
+  Get an user skill from the database by id.
+
+  ## Examples
+    iex> user_skill_params = %{"user_id" => user_id, "skill_id" => skill_id, "abstract" => "I studied it for 6 months"}
+
+    iex> {:ok, %Devspot.UserSkill{id: id}} = Devspot.create_user_skill(user_skill_params)
+
+    iex> {:ok, %Devspot.Skill{}} = Devspot.get_skill_by_id(id)
+  """
   defdelegate get_user_skills(user_id),
     to: GetSkill,
     as: :user_skill_by_user_id
 
-  defdelegate create_user_skill(params),
-    to: CreateSkill,
+  @doc """
+  Deletes an user skill from the database by id.
+
+  ## Examples
+    iex> user_skill_params = %{"user_id" => user_id, "skill_id" => skill_id, "abstract" => "I studied it for 6 months"}
+
+    iex> {:ok, %Devspot.UserSkill{id: user_skill_id}} = Devspot.create_user_skill(user_skill_params)
+
+    iex> {:ok, %Devspot.Skill{}} = Devspot.delete_user_skill(user_skill_id, user_id)
+  """
+  defdelegate delete_user_skill(user_skill_id, user_id),
+    to: DeleteSkill,
     as: :for_user_skill
 end

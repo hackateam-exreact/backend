@@ -4,21 +4,21 @@ defmodule Devspot.Skills.DeleteTest do
   import Devspot.Factory
 
   alias Devspot.Skills.Delete
-  alias Devspot.UserSkill
+  alias Devspot.{Skill, User, UserSkill}
 
   describe "for_user_skill/1" do
     test "when there is a user skill with the given id, deletes the user skill" do
-      insert(:skill, id: "b721fcad-e6e8-4e8f-910b-6911f2158b53")
-      insert(:user, id: "b721fcad-e6e8-4e8f-910b-6911f2158b5a")
+      %Skill{id: skill_id} = insert(:skill, id: "b721fcad-e6e8-4e8f-910b-6911f2158b53")
+      %User{id: user_id} = insert(:user, id: "b721fcad-e6e8-4e8f-910b-6911f2158b5a")
 
       %UserSkill{id: id} =
         insert(:user_skill,
           id: "b721fcad-e6e8-4e8f-910b-6911f2158b5c",
-          user_id: "b721fcad-e6e8-4e8f-910b-6911f2158b5a",
-          skill_id: "b721fcad-e6e8-4e8f-910b-6911f2158b53"
+          user_id: user_id,
+          skill_id: skill_id
         )
 
-      response = Delete.for_user_skill(id)
+      response = Delete.for_user_skill(id, user_id)
 
       assert {:ok,
               %UserSkill{
@@ -32,7 +32,11 @@ defmodule Devspot.Skills.DeleteTest do
     end
 
     test "when there is no user skill with the given id, returns an error" do
-      response = Delete.for_user_skill("b721fcad-e6e8-4e8f-910b-6911f2158b5c")
+      response =
+        Delete.for_user_skill(
+          "b721fcad-e6e8-4e8f-910b-6911f2158b5c",
+          "b721fcad-e6e8-4e8f-910b-6911f2158b5b"
+        )
 
       assert {:error, %Devspot.Error{result: "User skill not found", status: :not_found}} =
                response

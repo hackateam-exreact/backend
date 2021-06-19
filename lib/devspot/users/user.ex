@@ -25,7 +25,7 @@ defmodule Devspot.User do
     :image_url
   ]
 
-  @update_params @required_params -- [:password]
+  @update_params @required_params -- [:password, :email]
 
   @status_types [:Open, :Studying, :Employed]
 
@@ -75,7 +75,7 @@ defmodule Devspot.User do
     |> changes(params, @update_params)
   end
 
-  defp changes(struct, params, fields) do
+  defp changes(struct, params, @required_params = fields) do
     struct
     |> cast(params, @fields)
     |> validate_required(fields)
@@ -83,6 +83,12 @@ defmodule Devspot.User do
     |> validate_format(:email, ~r/@/)
     |> unique_constraint([:email])
     |> put_password_hash()
+  end
+
+  defp changes(struct, params, @update_params = fields) do
+    struct
+    |> cast(params, @fields)
+    |> validate_required(fields)
   end
 
   defp put_password_hash(%Changeset{valid?: true, changes: %{password: password}} = changeset) do

@@ -3,6 +3,7 @@ defmodule DevspotWeb.SkillsControllerTest do
 
   import Devspot.Factory
 
+  alias Devspot.UserSkill
   alias DevspotWeb.Auth.Guardian, as: AuthGuardian
 
   describe "index/2" do
@@ -57,6 +58,31 @@ defmodule DevspotWeb.SkillsControllerTest do
                  "user_id" => _user_id
                }
              } = response
+    end
+  end
+
+  describe "delete_user_skill/2" do
+    setup %{conn: conn} do
+      user = insert(:user)
+      insert(:skill)
+
+      %UserSkill{id: user_skill_id} = insert(:user_skill)
+      {:ok, token, _claims} = AuthGuardian.encode_and_sign(user)
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
+
+      {:ok, conn: conn, user_skill_id: user_skill_id}
+    end
+
+    test "when the user skills exists, deletes the user skill", %{
+      conn: conn,
+      user_skill_id: user_skill_id
+    } do
+      response =
+        conn
+        |> delete(Routes.skills_path(conn, :delete_user_skill, user_skill_id))
+        |> response(:no_content)
+
+      assert response == ""
     end
   end
 end

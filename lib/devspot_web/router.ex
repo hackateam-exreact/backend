@@ -16,6 +16,7 @@ defmodule DevspotWeb.Router do
 
     post "/certificates", CertificatesController, :create
     post "/skills", SkillsController, :create_user_skill
+    delete "/skills/:user_skill_id", SkillsController, :delete_user_skill
   end
 
   scope "/api", DevspotWeb do

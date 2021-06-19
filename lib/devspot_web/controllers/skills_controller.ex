@@ -34,4 +34,14 @@ defmodule DevspotWeb.SkillsController do
       |> render("user_skills.json", user_skills: skills)
     end
   end
+
+  def delete_user_skill(conn, %{"user_skill_id" => user_skill_id}) do
+    user_id = Guardian.retrieve_user_id_from_connection(conn)
+
+    with {:ok, %UserSkill{}} <- Devspot.delete_user_skill(user_skill_id, user_id) do
+      conn
+      |> put_status(:no_content)
+      |> text("")
+    end
+  end
 end

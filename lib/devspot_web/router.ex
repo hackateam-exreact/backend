@@ -22,6 +22,8 @@ defmodule DevspotWeb.Router do
     pipe_through([:api, :auth])
 
     post "/certificates", CertificatesController, :create
+    post "/skills", SkillsController, :create_user_skill
+    delete "/skills/:user_skill_id", SkillsController, :delete_user_skill
     post "/experiences", ExperiencesController, :create
     post "/articles", ArticlesController, :create
   end
@@ -32,6 +34,9 @@ defmodule DevspotWeb.Router do
     post "/users", UsersController, :create
     post "/users/sign_in", UsersController, :sign_in
     get "/users/:id", UsersController, :show
+
+    get "/skills", SkillsController, :index
+    get "/skills/:user_id", SkillsController, :show_user_skills
     get "/experiences/:user_id", ExperiencesController, :show
     delete "/experiences/:id", ExperiencesController, :delete
     get "/certificates/:user_id", CertificatesController, :show

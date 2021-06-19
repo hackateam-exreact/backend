@@ -5,6 +5,8 @@ defmodule DevspotWeb.UsersControllerTest do
 
   alias Devspot.User
 
+  alias DevspotWeb.Auth.Guardian, as: AuthGuardian
+
   describe "create/2" do
     test "when all params are valid, creates the user", %{conn: conn} do
       params = build(:user_params)
@@ -81,6 +83,42 @@ defmodule DevspotWeb.UsersControllerTest do
         |> json_response(:not_found)
 
       assert %{"message" => "User not found"} == response
+    end
+  end
+
+  describe "update/2" do
+    setup %{conn: conn} do
+      user = insert(:user)
+      {:ok, token, _claims} = AuthGuardian.encode_and_sign(user)
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
+
+      {:ok, conn: conn}
+    end
+
+    test "when all params are valid, updates the user", %{conn: conn} do
+      params = %{
+        "location" => "Ubatuba"
+      }
+
+      response =
+        conn
+        |> put(Routes.users_path(conn, :update, params))
+        |> json_response(:ok)
+
+      assert %{
+               "user" => %{
+                 "email" => "maiqui@email.com",
+                 "id" => _id,
+                 "contact" => "54 9 9191-9292",
+                 "description" => "bacana",
+                 "first_name" => "Maiqui",
+                 "image_url" => _url,
+                 "last_name" => "Tomé",
+                 "location" => "Ubatuba",
+                 "status" => "Open"
+               },
+               "message" => "User updated!"
+             } = response
     end
   end
 end

@@ -6,14 +6,21 @@ defmodule Devspot do
   Contexts are also responsible for managing your data, regardless
   if it comes from the database, an external API or others.
   """
+  alias Devspot.Articles.Create, as: CreateArticle
+  alias Devspot.Articles.Delete, as: DeleteArticle
+  alias Devspot.Articles.Get, as: GetArticle
   alias Devspot.Certificates.Create, as: CreateCertificate
   alias Devspot.Certificates.Delete, as: DeleteCertificate
   alias Devspot.Certificates.Get, as: GetCertificate
   alias Devspot.Experiences.Create, as: CreateExperience
   alias Devspot.Experiences.Delete, as: DeleteExperience
   alias Devspot.Experiences.Get, as: GetExperience
+  alias Devspot.Skills.Create, as: CreateSkill
+  alias Devspot.Skills.Delete, as: DeleteSkill
+  alias Devspot.Skills.Get, as: GetSkill
   alias Devspot.Users.Create, as: CreateUser
   alias Devspot.Users.Get, as: GetUser
+  alias Devspot.Users.Update, as: UpdateUser
 
   @doc """
   Inserts an user into the database.
@@ -62,6 +69,24 @@ defmodule Devspot do
     as: :by_email
 
   @doc """
+  Updates an User with the given params
+
+  ## Examples
+
+      iex> user_params = %{email: "maiqui@email.com", password: "123456", first_name: "Maiqui", last_name: "Tomé", contact: "54 9 9191-9292", location: "Flores da Cunha/RS", status: "Open"}
+
+      iex> {:ok, %Devspot.User{} = user} = Devspot.create_user(user_params)
+
+      iex> update_params = %{location: "Salvador BA"}
+
+      iex> {:ok, %Devspot.User{}} = Devspot.update_user(update_params)
+
+  """
+  defdelegate update_user(params),
+    to: UpdateUser,
+    as: :call
+
+  @doc """
   Inserts a certificate into the database.
 
   ## Examples
@@ -73,6 +98,82 @@ defmodule Devspot do
   defdelegate create_certificate(params),
     to: CreateCertificate,
     as: :call
+
+  @doc """
+  Inserts a skill into the database.
+
+  ## Examples
+
+    iex> skill_params = %{"name" => "React", "image_url" => "example.com"}
+
+    iex> {:ok, %Devspot.Skill{}} = Devspot.create_skill(skill_params)
+  """
+  defdelegate create_skill(params),
+    to: CreateSkill,
+    as: :call
+
+  @doc """
+  Retrieve all skills from the database.
+
+  ## Examples
+
+    iex> {:ok, [%Devspot.Skill{}, %Devspot.Skill{}]} = Devspot.get_all_skills()
+  """
+  defdelegate get_all_skills(),
+    to: GetSkill,
+    as: :all
+
+  @doc """
+  Get a skill from the database by id.
+
+  ## Examples
+
+    iex> {:ok, %Devspot.Skill{}} = Devspot.get_skill_by_id(id)
+  """
+  defdelegate get_skill_by_id(id),
+    to: GetSkill,
+    as: :by_id
+
+  @doc """
+  Inserts an user skill into the database.
+
+  ## Examples
+
+    iex> user_skill_params = %{"user_id" => user_id, "skill_id" => skill_id, "abstract" => "I studied it for 6 months"}
+
+    iex> {:ok, %Devspot.UserSkill{}} = Devspot.create_user_skill(user_skill_params)
+  """
+  defdelegate create_user_skill(params),
+    to: CreateSkill,
+    as: :for_user_skill
+
+  @doc """
+  Get an user skill from the database by id.
+
+  ## Examples
+    iex> user_skill_params = %{"user_id" => user_id, "skill_id" => skill_id, "abstract" => "I studied it for 6 months"}
+
+    iex> {:ok, %Devspot.UserSkill{id: id}} = Devspot.create_user_skill(user_skill_params)
+
+    iex> {:ok, %Devspot.Skill{}} = Devspot.get_skill_by_id(id)
+  """
+  defdelegate get_user_skills(user_id),
+    to: GetSkill,
+    as: :user_skill_by_user_id
+
+  @doc """
+  Deletes an user skill from the database by id.
+
+  ## Examples
+    iex> user_skill_params = %{"user_id" => user_id, "skill_id" => skill_id, "abstract" => "I studied it for 6 months"}
+
+    iex> {:ok, %Devspot.UserSkill{id: user_skill_id}} = Devspot.create_user_skill(user_skill_params)
+
+    iex> {:ok, %Devspot.Skill{}} = Devspot.delete_user_skill(user_skill_id, user_id)
+  """
+  defdelegate delete_user_skill(user_skill_id, user_id),
+    to: DeleteSkill,
+    as: :for_user_skill
 
   @doc """
   Deletes a certificate from the database.
@@ -206,5 +307,71 @@ defmodule Devspot do
   """
   defdelegate delete_experience(experience_id),
     to: DeleteExperience,
+    as: :call
+
+  @doc """
+  Inserts an article into the database.
+
+  ## Examples
+
+    iex> article_params = %{"user_id" => "6721ba81-00ce-46cd-b26c-973989b61c55", "url" => "https://dev.to/maiquitome/o-ciclo-de-vida-do-request-no-phoenix-53e7", "title" => "O Ciclo de Vida do Request no Phoenix"}
+
+    iex> {:ok, %Devspot.Article{}} = Devspot.create_article(article_params)
+
+  """
+  defdelegate create_article(params),
+    to: CreateArticle,
+    as: :call
+
+  @doc """
+  Gets all articles by user in the database.
+
+  ## Examples
+
+      iex> user_id = "6721ba81-00ce-46cd-b26c-973989b61c55"
+
+      iex> {:ok, schema_list} = Devspot.get_all_articles(user_id)
+
+  """
+  defdelegate get_all_articles(user_id),
+    to: GetArticle,
+    as: :all_by_user_id
+
+  @doc """
+  Gets an article by id from the database.
+
+  ## Examples
+
+      iex> article_id = "d8d256d3-9f97-46ce-ad4c-08e1c01f09ad"
+
+      iex> {:ok, %Devspot.Article{}} = Devspot.get_article_by_id(article_id)
+
+  """
+  defdelegate get_article_by_id(article_id),
+    to: GetArticle,
+    as: :article_by_id
+
+  @doc """
+  Deletes an article from the database.
+
+  ## Examples
+
+    * creating an article
+
+        iex> article_params = %{"user_id" => "6721ba81-00ce-46cd-b26c-973989b61c55", "url" => "https://dev.to/maiquitome/o-ciclo-de-vida-do-request-no-phoenix-53e7", "title" => "O Ciclo de Vida do Request no Phoenix"}
+
+        iex> {:ok, %Devspot.Article{id: article_id}} = Devspot.create_article(article_params)
+
+    * deleting an article
+
+        iex> {:ok, %Devspot.Article{}} = Devspot.delete_article(article_id)
+
+    * getting the deleted article
+
+        iex> {:error, %Devspot.Error{}} = Devspot.Articles.Get.article_by_id(article_id)
+
+  """
+  defdelegate delete_article(article_id),
+    to: DeleteArticle,
     as: :call
 end

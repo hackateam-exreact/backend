@@ -6,21 +6,40 @@ defmodule Devspot.User do
 
   alias Ecto.Changeset
 
-  alias Devspot.Certificate
-  alias Devspot.Experience
+  alias Devspot.{Article, Certificate, Experience, UserSkill}
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
   @required_params [:email, :first_name, :last_name, :password]
 
-  @fields [:email, :first_name, :last_name, :location, :contact, :status, :password]
+  @fields [
+    :email,
+    :first_name,
+    :last_name,
+    :location,
+    :contact,
+    :status,
+    :password,
+    :description,
+    :image_url
+  ]
 
-  @update_params @required_params -- [:password]
+  @update_params @required_params -- [:password, :email]
 
   @status_types [:Open, :Studying, :Employed]
 
   @derive {Jason.Encoder,
-           only: [:id, :email, :first_name, :last_name, :location, :contact, :status]}
+           only: [
+             :id,
+             :email,
+             :first_name,
+             :last_name,
+             :location,
+             :contact,
+             :status,
+             :description,
+             :image_url
+           ]}
 
   schema "users" do
     field :email, :string
@@ -31,9 +50,13 @@ defmodule Devspot.User do
     field :contact, :string
     field :location, :string
     field :status, Enum, values: @status_types
+    field :description, :string
+    field :image_url, :string
 
     has_many :certificates, Certificate
+    has_many :user_skills, UserSkill
     has_many :experiences, Experience
+    has_many :articles, Article
 
     timestamps()
   end
@@ -53,7 +76,7 @@ defmodule Devspot.User do
     |> changes(params, @update_params)
   end
 
-  defp changes(struct, params, fields) do
+  defp changes(struct, params, @required_params = fields) do
     struct
     |> cast(params, @fields)
     |> validate_required(fields)
@@ -61,6 +84,12 @@ defmodule Devspot.User do
     |> validate_format(:email, ~r/@/)
     |> unique_constraint([:email])
     |> put_password_hash()
+  end
+
+  defp changes(struct, params, @update_params = fields) do
+    struct
+    |> cast(params, @fields)
+    |> validate_required(fields)
   end
 
   defp put_password_hash(%Changeset{valid?: true, changes: %{password: password}} = changeset) do

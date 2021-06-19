@@ -10,14 +10,14 @@ defmodule Devspot do
   alias Devspot.Articles.Delete, as: DeleteArticle
   alias Devspot.Articles.Get, as: GetArticle
   alias Devspot.Certificates.Create, as: CreateCertificate
-  alias Devspot.Skills.Create, as: CreateSkill
-  alias Devspot.Skills.Delete, as: DeleteSkill
-  alias Devspot.Skills.Get, as: GetSkill
   alias Devspot.Certificates.Delete, as: DeleteCertificate
   alias Devspot.Certificates.Get, as: GetCertificate
   alias Devspot.Experiences.Create, as: CreateExperience
   alias Devspot.Experiences.Delete, as: DeleteExperience
   alias Devspot.Experiences.Get, as: GetExperience
+  alias Devspot.Skills.Create, as: CreateSkill
+  alias Devspot.Skills.Delete, as: DeleteSkill
+  alias Devspot.Skills.Get, as: GetSkill
   alias Devspot.Users.Create, as: CreateUser
   alias Devspot.Users.Get, as: GetUser
 
@@ -155,8 +155,8 @@ defmodule Devspot do
   defdelegate delete_user_skill(user_skill_id, user_id),
     to: DeleteSkill,
     as: :for_user_skill
-    
-@doc """
+
+  @doc """
   Deletes a certificate from the database.
 
   ## Examples

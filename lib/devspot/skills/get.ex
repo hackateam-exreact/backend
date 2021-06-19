@@ -3,7 +3,7 @@ defmodule Devspot.Skills.Get do
 
   alias Devspot.{Error, Repo, Skill, UserSkill}
 
-  def all() do
+  def all do
     {:ok, Repo.all(Skill)}
   end
 

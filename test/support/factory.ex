@@ -66,8 +66,9 @@ defmodule Devspot.Factory do
       skill_id: "b721fcad-e6e8-4e8f-910b-6911f2158b4b",
       user_id: "b721fcad-e6e8-4e8f-910b-6911f2158b4a",
       abstract: "I studied 6 months and built an app to support medical health care"
+    }
   end
-      
+
   def certificate_factory do
     %Certificate{
       user_id: "b721fcad-e6e8-4e8f-910b-6911f2158b4a",

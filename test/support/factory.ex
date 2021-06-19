@@ -73,6 +73,7 @@ defmodule Devspot.Factory do
 
   def certificate_factory do
     %Certificate{
+      id: "b721fcad-e6e8-4e8f-910b-6911f2158b4d",
       user_id: "b721fcad-e6e8-4e8f-910b-6911f2158b4a",
       url: "https://balta.io/certificados/1fd6a983-6805-4bb6-8cbd-274e5364d9db",
       title: "Começando com Angular com carga horária de 2 horas"
@@ -91,6 +92,7 @@ defmodule Devspot.Factory do
 
   def experience_factory do
     %Experience{
+      id: "b721fcad-e6e8-4e8f-910b-6911f2158b4d",
       user_id: "b721fcad-e6e8-4e8f-910b-6911f2158b4a",
       company: "Stone",
       role: "Elixir Backend Developer",
@@ -109,6 +111,7 @@ defmodule Devspot.Factory do
 
   def article_factory do
     %Article{
+      id: "b721fcad-e6e8-4e8f-910b-6911f2158b4d",
       user_id: "b721fcad-e6e8-4e8f-910b-6911f2158b4a",
       url: "https://dev.to/maiquitome/o-ciclo-de-vida-do-request-no-phoenix-53e7",
       title: "O Ciclo de Vida do Request no Phoenix"

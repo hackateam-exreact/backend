@@ -84,5 +84,20 @@ defmodule DevspotWeb.SkillsControllerTest do
 
       assert response == ""
     end
+
+    test "when there's no user skill with the given id, returns an error", %{
+      conn: conn
+    } do
+      user_skill_id = "b721fcad-e6e8-4e8f-910b-6911f2158b4f"
+
+      response =
+        conn
+        |> delete(Routes.skills_path(conn, :delete_user_skill, user_skill_id))
+        |> json_response(:not_found)
+
+      expected_response = %{"message" => "User skill not found"}
+
+      assert response == expected_response
+    end
   end
 end

@@ -192,14 +192,14 @@ defmodule Devspot do
 
     * deleting a certificate
 
-          iex> {:ok, %Devspot.Certificate{}} = Devspot.delete_certificate(certificate_id)
+          iex> {:ok, %Devspot.Certificate{}} = Devspot.delete_certificate(certificate_id, user_id)
 
     * getting the deleted certificate
 
           iex> {:error, %Devspot.Error{}} = Devspot.Certificates.Get.certificate_by_id(certificate_id)
 
   """
-  defdelegate delete_certificate(certificate_id),
+  defdelegate delete_certificate(certificate_id, user_id),
     to: DeleteCertificate,
     as: :call
 
@@ -298,14 +298,14 @@ defmodule Devspot do
 
     * deleting an experience
 
-          iex> {:ok, %Devspot.Experience{}} = Devspot.delete_experience(experience_id)
+          iex> {:ok, %Devspot.Experience{}} = Devspot.delete_experience(experience_id, user_id)
 
     * getting the deleted experience
 
           iex> {:error, %Devspot.Error{}} = Devspot.Experiences.Get.experience_by_id(experience_id)
 
   """
-  defdelegate delete_experience(experience_id),
+  defdelegate delete_experience(experience_id, user_id),
     to: DeleteExperience,
     as: :call
 
@@ -364,14 +364,14 @@ defmodule Devspot do
 
     * deleting an article
 
-        iex> {:ok, %Devspot.Article{}} = Devspot.delete_article(article_id)
+        iex> {:ok, %Devspot.Article{}} = Devspot.delete_article(article_id, user_id)
 
     * getting the deleted article
 
         iex> {:error, %Devspot.Error{}} = Devspot.Articles.Get.article_by_id(article_id)
 
   """
-  defdelegate delete_article(article_id),
+  defdelegate delete_article(article_id, user_id),
     to: DeleteArticle,
     as: :call
 end

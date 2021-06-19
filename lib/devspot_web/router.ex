@@ -4,23 +4,32 @@ defmodule DevspotWeb.Router do
   alias DevspotWeb.Auth.Pipeline, as: AuthPipeline
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(CORSPlug,
+      origin: [
+        "https://frontend-git-develop-fullstack-alchemists.vercel.app/",
+        "http://localhost:3000"
+      ]
+    )
+
+    plug(:accepts, ["json"])
   end
 
   pipeline :auth do
-    plug AuthPipeline
+    plug(AuthPipeline)
   end
 
   scope "/api", DevspotWeb do
-    pipe_through [:api, :auth]
+    pipe_through([:api, :auth])
 
     post "/certificates", CertificatesController, :create
     post "/skills", SkillsController, :create_user_skill
     delete "/skills/:user_skill_id", SkillsController, :delete_user_skill
+    post "/experiences", ExperiencesController, :create
+    post "/articles", ArticlesController, :create
   end
 
   scope "/api", DevspotWeb do
-    pipe_through :api
+    pipe_through(:api)
 
     post "/users", UsersController, :create
     post "/users/sign_in", UsersController, :sign_in
@@ -28,6 +37,12 @@ defmodule DevspotWeb.Router do
 
     get "/skills", SkillsController, :index
     get "/skills/:user_id", SkillsController, :show_user_skills
+    get "/experiences/:user_id", ExperiencesController, :show
+    delete "/experiences/:id", ExperiencesController, :delete
+    get "/certificates/:user_id", CertificatesController, :show
+    delete "/certificates/:id", CertificatesController, :delete
+    get "/articles/:user_id", ArticlesController, :show
+    delete "/articles/:id", ArticlesController, :delete
   end
 
   # Enables LiveDashboard only for development
@@ -41,8 +56,8 @@ defmodule DevspotWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through [:fetch_session, :protect_from_forgery]
-      live_dashboard "/dashboard", metrics: DevspotWeb.Telemetry
+      pipe_through([:fetch_session, :protect_from_forgery])
+      live_dashboard("/dashboard", metrics: DevspotWeb.Telemetry)
     end
   end
 end

@@ -1,30 +1,28 @@
-defmodule Devspot.Certificate do
+defmodule Devspot.Article do
   use Ecto.Schema
   import Ecto.Changeset
-
-  alias Devspot.User
 
   @derive {Jason.Encoder, only: [:id, :user_id, :url, :title]}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-  schema "certificates" do
-    field :url, :string
+  schema "articles" do
     field :title, :string
+    field :url, :string
 
-    belongs_to :user, User
+    belongs_to :user, Devspot.User
 
     timestamps()
   end
 
-  @doc false
   def changeset(attrs) do
     changeset(%__MODULE__{}, attrs)
   end
 
-  def changeset(certificate, attrs) do
-    certificate
-    |> cast(attrs, [:url, :user_id, :title])
-    |> validate_required([:url, :user_id, :title])
+  @doc false
+  def changeset(article, attrs) do
+    article
+    |> cast(attrs, [:user_id, :url, :title])
+    |> validate_required([:user_id, :url, :title])
   end
 end

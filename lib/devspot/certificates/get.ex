@@ -1,7 +1,7 @@
 defmodule Devspot.Certificates.Get do
   import Ecto.Query, only: [from: 2]
 
-  alias Devspot.{Error, Certificate, User}
+  alias Devspot.{Certificate, Error, User}
   alias Devspot.Repo
 
   @doc """

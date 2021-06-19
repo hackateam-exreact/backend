@@ -13,14 +13,34 @@ defmodule Devspot.User do
 
   @required_params [:email, :first_name, :last_name, :password]
 
-  @fields [:email, :first_name, :last_name, :location, :contact, :status, :password]
+  @fields [
+    :email,
+    :first_name,
+    :last_name,
+    :location,
+    :contact,
+    :status,
+    :password,
+    :description,
+    :image_url
+  ]
 
   @update_params @required_params -- [:password]
 
   @status_types [:Open, :Studying, :Employed]
 
   @derive {Jason.Encoder,
-           only: [:id, :email, :first_name, :last_name, :location, :contact, :status]}
+           only: [
+             :id,
+             :email,
+             :first_name,
+             :last_name,
+             :location,
+             :contact,
+             :status,
+             :description,
+             :image_url
+           ]}
 
   schema "users" do
     field :email, :string
@@ -31,6 +51,8 @@ defmodule Devspot.User do
     field :contact, :string
     field :location, :string
     field :status, Enum, values: @status_types
+    field :description, :string
+    field :image_url, :string
 
     has_many :certificates, Certificate
     has_many :experiences, Experience

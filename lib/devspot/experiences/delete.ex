@@ -27,12 +27,13 @@ defmodule Devspot.Experiences.Delete do
           iex> {:error, %Devspot.Error{}} = Devspot.Experiences.Get.experience_by_id(experience_id)
 
   """
-  @spec call(Ecto.UUID) ::
+  @spec call(Ecto.UUID, Ecto.UUID) ::
           {:ok, %Experience{}}
           | {:error, %Error{result: String.t(), status: :not_found}}
-  def call(experience_id) do
-    with {:ok, %Experience{} = experience} <- Devspot.get_experience_by_id(experience_id) do
-      Repo.delete(experience)
+  def call(experience_id, user_id) do
+    case Repo.get_by(Experience, id: experience_id, user_id: user_id) do
+      nil -> {:error, Error.build_experience_not_found_error()}
+      experience -> Repo.delete(experience)
     end
   end
 end

@@ -1,5 +1,5 @@
 defmodule DevspotWeb.ArticlesControllerTest do
-  use DevspotWeb.ConnCase, async: true
+  use DevspotWeb.ConnCase, async: false
 
   import Devspot.Factory
 
@@ -41,7 +41,7 @@ defmodule DevspotWeb.ArticlesControllerTest do
 
       insert(:user)
       insert(:article)
-      insert(:article, title: "Segundo Curso")
+      insert(:article, title: "Segundo Curso", id: "b721fcad-e6e8-4e8f-910b-6911f2158b4b")
 
       response =
         conn
@@ -81,21 +81,31 @@ defmodule DevspotWeb.ArticlesControllerTest do
   end
 
   describe "delete/2" do
-    test "when there is an article with the given id, deletes the article", %{conn: conn} do
-      insert(:user)
-      %Article{id: article_id} = insert(:article)
+    setup %{conn: conn} do
+      user = insert(:user)
 
+      %Article{id: article_id} = insert(:article)
+      {:ok, token, _claims} = AuthGuardian.encode_and_sign(user)
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
+
+      {:ok, conn: conn, article_id: article_id}
+    end
+
+    test "when the article exists, deletes the article", %{
+      conn: conn,
+      article_id: article_id
+    } do
       response =
         conn
         |> delete(Routes.articles_path(conn, :delete, article_id))
         |> response(:no_content)
 
-      expected_response = ""
-
-      assert response == expected_response
+      assert response == ""
     end
 
-    test "when there is no article with the given id, returns an error", %{conn: conn} do
+    test "when there's no article with the given id, returns an error", %{
+      conn: conn
+    } do
       article_id = "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
 
       response =

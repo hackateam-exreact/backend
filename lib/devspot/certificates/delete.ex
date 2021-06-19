@@ -25,12 +25,13 @@ defmodule Devspot.Certificates.Delete do
         iex> {:error, %Devspot.Error{}} = Devspot.Certificates.Get.certificate_by_id(certificate_id)
 
   """
-  @spec call(Ecto.UUID) ::
+  @spec call(Ecto.UUID, Ecto.UUID) ::
           {:ok, %Certificate{}}
           | {:error, %Error{result: String.t(), status: :not_found}}
-  def call(certificate_id) do
-    with {:ok, %Certificate{} = certificate} <- Devspot.get_certificate_by_id(certificate_id) do
-      Repo.delete(certificate)
+  def call(certificate_id, user_id) do
+    case Repo.get_by(Certificate, id: certificate_id, user_id: user_id) do
+      nil -> {:error, Error.build_certificate_not_found_error()}
+      certificate -> Repo.delete(certificate)
     end
   end
 end

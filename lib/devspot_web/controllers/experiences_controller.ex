@@ -27,7 +27,9 @@ defmodule DevspotWeb.ExperiencesController do
   end
 
   def delete(conn, %{"id" => experience_id}) do
-    with {:ok, %Experience{}} <- Devspot.delete_experience(experience_id) do
+    user_id = Guardian.retrieve_user_id_from_connection(conn)
+
+    with {:ok, %Experience{}} <- Devspot.delete_experience(experience_id, user_id) do
       conn
       |> put_status(:no_content)
       |> text("")

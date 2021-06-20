@@ -30,5 +30,8 @@ defmodule Devspot.Skills.Get do
     [head | tail] = String.split(skill_str)
 
     SkillSearch.search_user_by_skills(head, tail)
+    |> handle_get()
   end
+
+  def search_user_by_skills(_skill_str), do: {:error, Error.build(:bad_request, "Not a string")}
 end

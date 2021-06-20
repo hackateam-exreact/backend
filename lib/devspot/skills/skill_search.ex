@@ -1,7 +1,7 @@
 defmodule Devspot.Skills.SkillSearch do
   import Ecto.Query
 
-  alias Devspot.{Error, Repo, Skill, UserSkill}
+  alias Devspot.{Repo, Skill, UserSkill}
 
   def search_user_by_skills(first_skill, other_skills) do
     with %{} = acc <- generate_acc(first_skill) do
@@ -11,8 +11,6 @@ defmodule Devspot.Skills.SkillSearch do
       [] -> []
     end
   end
-
-  def search_user_by_skills(_skill_str), do: {:error, Error.build(:bad_request, "Not a string")}
 
   defp filter_user_by_skills(skill, acc) do
     get_by_skill_name(skill)

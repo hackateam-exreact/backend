@@ -1,6 +1,6 @@
 defmodule Devspot.Projects.Create do
-  alias Devspot.Projects.Get, as: ProjectsGet
   alias Devspot.GithubProjects.Create, as: GithubProjectsCreate
+  alias Devspot.Projects.Get, as: ProjectsGet
   alias Devspot.{Error, Project, Repo, User}
 
   @doc """

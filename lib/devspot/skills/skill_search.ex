@@ -4,11 +4,13 @@ defmodule Devspot.Skills.SkillSearch do
   alias Devspot.{Repo, Skill, UserSkill}
 
   def search_user_by_skills(first_skill, other_skills) do
-    with %{} = acc <- generate_acc(first_skill) do
-      Enum.reduce(other_skills, acc, fn skill, acc -> filter_user_by_skills(skill, acc) end)
-      |> Enum.map(fn {_key, user} -> user end)
-    else
-      [] -> []
+    case generate_acc(first_skill) do
+      %{} = acc ->
+        Enum.reduce(other_skills, acc, fn skill, acc -> filter_user_by_skills(skill, acc) end)
+        |> Enum.map(fn {_key, user} -> user end)
+
+      [] ->
+        []
     end
   end
 

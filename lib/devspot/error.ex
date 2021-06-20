@@ -16,4 +16,5 @@ defmodule Devspot.Error do
   def build_experience_not_found_error, do: build(:not_found, "Experience not found")
   def build_certificate_not_found_error, do: build(:not_found, "Certificate not found")
   def build_article_not_found_error, do: build(:not_found, "Article not found")
+  def build_project_not_found_error, do: build(:not_found, "Project not found")
 end

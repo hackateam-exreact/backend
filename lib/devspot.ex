@@ -176,6 +176,16 @@ defmodule Devspot do
     as: :for_user_skill
 
   @doc """
+  Search user with the given skills.
+
+  ## Examples
+    iex> {:ok, [%Devspot.User{}]} = Devspot.search_user_with_skills(query)
+  """
+  defdelegate search_user_with_skills(query),
+    to: GetSkill,
+    as: :get_user_with_skills
+
+  @doc """
   Deletes a certificate from the database.
 
   ## Examples

@@ -44,4 +44,12 @@ defmodule DevspotWeb.SkillsController do
       |> text("")
     end
   end
+
+  def search_user_with_skills(conn, %{"query" => query}) do
+    with {:ok, user_list} <- Devspot.search_user_with_skills(query) do
+      conn
+      |> put_status(:ok)
+      |> render(:users_with_skills, user_list: user_list)
+    end
+  end
 end

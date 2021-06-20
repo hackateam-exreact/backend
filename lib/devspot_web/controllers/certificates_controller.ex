@@ -27,7 +27,9 @@ defmodule DevspotWeb.CertificatesController do
   end
 
   def delete(conn, %{"id" => certificate_id}) do
-    with {:ok, %Certificate{}} <- Devspot.delete_certificate(certificate_id) do
+    user_id = Guardian.retrieve_user_id_from_connection(conn)
+
+    with {:ok, %Certificate{}} <- Devspot.delete_certificate(certificate_id, user_id) do
       conn
       |> put_status(:no_content)
       |> text("")

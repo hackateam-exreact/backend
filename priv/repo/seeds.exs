@@ -29,7 +29,7 @@ skills = [
     image_url: "https://pbs.twimg.com/profile_images/1273307847103635465/lfVWBmiW_400x400.png"
   },
   %Skill{
-    name: "REST API",
+    name: "REST",
     image_url:
       "https://15f76u3xxy662wdat72j3l53-wpengine.netdna-ssl.com/wp-content/themes/x-child-onix/images/for-connectors/rest.png"
   },

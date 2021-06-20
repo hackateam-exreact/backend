@@ -19,4 +19,10 @@ defmodule DevspotWeb.SkillsView do
       user_skills: user_skills
     }
   end
+
+  def render("users_with_skills.json", %{user_list: user_list}) do
+    %{
+      user_list: user_list
+    }
+  end
 end

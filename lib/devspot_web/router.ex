@@ -29,6 +29,9 @@ defmodule DevspotWeb.Router do
     delete "/projects/:id", ProjectsController, :delete
     put "/users", UsersController, :update
     post "/articles", ArticlesController, :create
+    delete "/experiences/:id", ExperiencesController, :delete
+    delete "/certificates/:id", CertificatesController, :delete
+    delete "/articles/:id", ArticlesController, :delete
   end
 
   scope "/api", DevspotWeb do
@@ -38,12 +41,11 @@ defmodule DevspotWeb.Router do
     post "/users/sign_in", UsersController, :sign_in
     get "/users/:id", UsersController, :show
 
+    get "/skills/search/:query", SkillsController, :search_user_with_skills
     get "/skills", SkillsController, :index
     get "/skills/:user_id", SkillsController, :show_user_skills
     get "/experiences/:user_id", ExperiencesController, :show
-    delete "/experiences/:id", ExperiencesController, :delete
     get "/certificates/:user_id", CertificatesController, :show
-    delete "/certificates/:id", CertificatesController, :delete
     get "/articles/:user_id", ArticlesController, :show
     delete "/articles/:id", ArticlesController, :delete
     get "/projects/:user_id", ProjectsController, :show

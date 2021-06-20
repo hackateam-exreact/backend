@@ -1,5 +1,5 @@
 defmodule DevspotWeb.ExperiencesControllerTest do
-  use DevspotWeb.ConnCase, async: true
+  use DevspotWeb.ConnCase, async: false
 
   import Devspot.Factory
 
@@ -80,21 +80,31 @@ defmodule DevspotWeb.ExperiencesControllerTest do
   end
 
   describe "delete/2" do
-    test "when there is an experience with the given id, deletes the experience", %{conn: conn} do
-      insert(:user)
-      %Experience{id: experience_id} = insert(:experience)
+    setup %{conn: conn} do
+      user = insert(:user)
 
+      %Experience{id: experience_id} = insert(:experience)
+      {:ok, token, _claims} = AuthGuardian.encode_and_sign(user)
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
+
+      {:ok, conn: conn, experience_id: experience_id}
+    end
+
+    test "when the experience exists, deletes the experience", %{
+      conn: conn,
+      experience_id: experience_id
+    } do
       response =
         conn
         |> delete(Routes.experiences_path(conn, :delete, experience_id))
         |> response(:no_content)
 
-      expected_response = ""
-
-      assert response == expected_response
+      assert response == ""
     end
 
-    test "when there is no an experience with the given id, returns an error", %{conn: conn} do
+    test "when there's no experiences with the given id, returns an error", %{
+      conn: conn
+    } do
       experience_id = "b721fcad-e6e8-4e8f-910b-6911f2158b4a"
 
       response =

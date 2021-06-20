@@ -3,7 +3,7 @@ defmodule Devspot.Skills.SkillSearchTest do
 
   import Devspot.Factory
 
-  alias Devspot.{Skill, UserSkill}
+  alias Devspot.Skill
   alias Devspot.Skills.SkillSearch
 
   describe "search_user_by_skills/2" do

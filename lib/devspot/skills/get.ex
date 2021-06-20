@@ -33,5 +33,5 @@ defmodule Devspot.Skills.Get do
     |> handle_get()
   end
 
-  def search_user_by_skills(_skill_str), do: {:error, Error.build(:bad_request, "Not a string")}
+  def get_user_with_skills(_skill_str), do: {:error, Error.build(:bad_request, "Not a string")}
 end

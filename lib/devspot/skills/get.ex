@@ -1,7 +1,7 @@
 defmodule Devspot.Skills.Get do
   import Ecto.Query
 
-  alias Devspot.{Error, Repo, Skill, UserSkill}
+  alias Devspot.{Error, Repo, Skill, Skills.SkillSearch, UserSkill}
 
   def all do
     {:ok, Repo.all(Skill)}
@@ -25,4 +25,13 @@ defmodule Devspot.Skills.Get do
 
   defp handle_get(skills) when is_list(skills), do: {:ok, skills}
   defp handle_get(error), do: {:error, Error.build(:bad_request, error)}
+
+  def get_user_with_skills(skill_str) when is_binary(skill_str) do
+    [head | tail] = String.split(skill_str)
+
+    SkillSearch.search_user_by_skills(head, tail)
+    |> handle_get()
+  end
+
+  def get_user_with_skills(_skill_str), do: {:error, Error.build(:bad_request, "Not a string")}
 end

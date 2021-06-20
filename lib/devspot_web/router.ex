@@ -39,6 +39,7 @@ defmodule DevspotWeb.Router do
     post "/users/sign_in", UsersController, :sign_in
     get "/users/:id", UsersController, :show
 
+    get "/skills/search/:query", SkillsController, :search_user_with_skills
     get "/skills", SkillsController, :index
     get "/skills/:user_id", SkillsController, :show_user_skills
     get "/experiences/:user_id", ExperiencesController, :show

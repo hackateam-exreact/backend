@@ -6,7 +6,7 @@ defmodule Devspot.User do
 
   alias Ecto.Changeset
 
-  alias Devspot.{Article, Certificate, Experience, UserSkill}
+  alias Devspot.{Article, Certificate, Experience, Project, UserSkill}
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
@@ -57,6 +57,7 @@ defmodule Devspot.User do
     has_many :user_skills, UserSkill
     has_many :experiences, Experience
     has_many :articles, Article
+    has_many :projects, Project
 
     timestamps()
   end

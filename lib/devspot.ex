@@ -15,6 +15,9 @@ defmodule Devspot do
   alias Devspot.Experiences.Create, as: CreateExperience
   alias Devspot.Experiences.Delete, as: DeleteExperience
   alias Devspot.Experiences.Get, as: GetExperience
+  alias Devspot.Projects.Create, as: CreateProject
+  alias Devspot.Projects.Delete, as: DeleteProject
+  alias Devspot.Projects.Get, as: GetProject
   alias Devspot.Skills.Create, as: CreateSkill
   alias Devspot.Skills.Delete, as: DeleteSkill
   alias Devspot.Skills.Get, as: GetSkill
@@ -373,5 +376,47 @@ defmodule Devspot do
   """
   defdelegate delete_article(article_id),
     to: DeleteArticle,
+    as: :call
+
+  @doc """
+  Inserts a project into the database.
+  """
+  defdelegate create_project(params),
+    to: CreateProject,
+    as: :call
+
+  @doc """
+  Gets a project by id from the database.
+
+  ## Examples
+
+      iex> project_id = "ba098e5c-f1dc-462c-8f64-bb7dd98e149c"
+
+      iex> {:ok, %Devspot.Project{}} = Devspot.get_project_by_id(project_id)
+
+  """
+  defdelegate get_project_by_id(project_id),
+    to: GetProject,
+    as: :project_by_id
+
+  @doc """
+  Gets all projects by user in the database.
+
+  ## Examples
+
+      iex> user_id = "6721ba81-00ce-46cd-b26c-973989b61c55"
+
+      iex> {:ok, projects_list} = Devspot.get_all_projects(user_id)
+
+  """
+  defdelegate get_all_projects(user_id),
+    to: GetProject,
+    as: :all_by_user_id
+
+  @doc """
+  Deletes a project and its github_projects.
+  """
+  defdelegate delete_project(project_id, user_id),
+    to: DeleteProject,
     as: :call
 end
